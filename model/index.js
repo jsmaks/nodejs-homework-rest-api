@@ -19,12 +19,6 @@ const getContactById = async (contactId) => {
 const add = async (body) => {
   const contacts = await listContacts()
 
-  // const isContactPresentInDatabase = !!contacts.find(
-  //   (item) => item.name === body.name
-  // )
-
-  // if (isContactPresentInDatabase) return
-
   const newContact = { ...body, id: id() }
   const result = [...contacts, newContact]
 
