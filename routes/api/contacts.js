@@ -1,24 +1,15 @@
-const express = require('express')
-const router = express.Router()
+/* eslint-disable object-curly-spacing */
+/* eslint-disable semi */
 
-router.get('/', async (req, res, next) => {
-  res.json({ message: 'template message' })
-})
+const express = require('express');
+const {contacts: ctrl} = require('../../controllers');
+const router = express.Router();
 
-router.get('/:contactId', async (req, res, next) => {
-  res.json({ message: 'template message' })
-})
+router
+  .get('/', ctrl.getList)
+  .get('/:contactId', ctrl.getById)
+  .post('/', express.json(), ctrl.addContact)
+  .delete('/:contactId', ctrl.del)
+  .put('/:contactId', ctrl.update);
 
-router.post('/', async (req, res, next) => {
-  res.json({ message: 'template message' })
-})
-
-router.delete('/:contactId', async (req, res, next) => {
-  res.json({ message: 'template message' })
-})
-
-router.patch('/:contactId', async (req, res, next) => {
-  res.json({ message: 'template message' })
-})
-
-module.exports = router
+module.exports = router;
