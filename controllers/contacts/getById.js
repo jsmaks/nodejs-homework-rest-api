@@ -1,12 +1,13 @@
 
-const { getContactById } = require('../../model')
+// const { getContactById } = require('../../model')
+const { Contact } = require('../../models');
 
 const getById = async (req, res, next) => {
   const { contactId } = req.params
   console.log(contactId)
 
   try {
-    const selectProduct = await getContactById(contactId)
+    const selectProduct = await Contact.findOne({ _id: contactId })
     console.log(selectProduct)
 
     if (!selectProduct) {

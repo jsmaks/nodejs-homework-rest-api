@@ -1,16 +1,12 @@
 const { Contact } = require('../../models');
-const { contactsSchema } = require('../../utils/validate/contacts');
 
-const update = async (req, res, next) => {
-  const { error } = contactsSchema.validate(req.body);
-  const {body} = req;
- 
+const favoriteContact = async (req, res, next) => {
   const { contactId } = req.params;
+  const { body } = req;
   try {
-    const result = await Contact.findByIdAndUpdate( { _id: contactId },
-      { ...body },);
-    
-    if (!result) {
+    const updateContact = await Contact.findByIdAndUpdate(contactId, body);
+
+    if (!updateContact) {
       throw Error;
     }
 
@@ -21,14 +17,14 @@ const update = async (req, res, next) => {
     res.json({
       status: 'success',
       code: 200,
-      message: 'Contact succesfully updated',
+      message: 'Favorite succesfully updated',
     });
   } catch (error) {
     if (error.message === '400') {
       return res.status(400).json({
         status: 'bad request',
         code: 400,
-        message: 'Missing the body of the request',
+        message: 'Missing field favorite',
       });
     }
 
@@ -39,4 +35,4 @@ const update = async (req, res, next) => {
     });
   }
 };
-module.exports = update;
+module.exports = favoriteContact;

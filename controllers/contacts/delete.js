@@ -1,27 +1,29 @@
-const { delContact } = require('../../model')
+const { Contact } = require('../../models');
 
 const del = async (req, res, next) => {
   try {
-    const { contactId } = req.params
-    const contact = await delContact(contactId)
-    console.log('tytaa', contact)
+    const { contactId } = req.params;
+    console.log(contactId);
+    const contact = await Contact.findByIdAndDelete(contactId);
 
     if (contact) {
       res.json({
         status: 'success',
         code: 200,
-        message: 'deleted'
-
-      })
+        message: 'deleted',
+        data: {
+          contact,
+        },
+      });
     } else {
       res.status(200).json({
         status: 'success',
         code: 200,
-        message: 'No Content'
-      })
+        message: 'No Content',
+      });
     }
   } catch (error) {
-    next(error)
+    next(error);
   }
-}
-module.exports = del
+};
+module.exports = del;

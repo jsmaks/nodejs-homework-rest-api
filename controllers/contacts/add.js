@@ -1,32 +1,20 @@
 /* eslint-disable no-unused-vars */
 // const { v4: id } = require('uuid')
-const { add } = require('../../model');
-const contactsSchema = require('../../utils/validate/contacts');
+const { Contact } = require('../../models');
 
-const addContact = async (req, res) => {
-  const { error } = contactsSchema.validate(req.body);
+const add = async (req, res, next) => {
+  const { body } = req;
   try {
-    const newContact = await add(req.body);
-
-    if (!newContact || error) {
-      res.status(400).json({
-        status: 'error',
-        code: 400,
-        message: error.message,
-      });
-      return;
-    }
-
+    const result = await Contact.create(body);
     res.status(201).json({
       status: 'success',
       code: 201,
       data: {
-        result: newContact,
+        result,
       },
     });
   } catch (error) {
-    console.log(error);
+    next(error)
   }
 };
-
-module.exports = addContact;
+module.exports = add;
