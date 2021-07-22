@@ -1,10 +1,14 @@
 const express = require('express');
 const logger = require('morgan');
 const cors = require('cors');
-
+const api = require("./api")
 const app = express();
+//------------------------------------------------------
+//------------------------------------------------------
+require("./configs/passport-config")
 
 const contactsRouter = require('./routes/api/contacts');
+// const { required } = require('joi');
 app.use('/api/contacts', contactsRouter);
 
 const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';
@@ -12,6 +16,10 @@ const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';
 app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
+
+app.use("/api/auth", api.auth)
+app.use("/api/users", api.users)
+
 
 app.use((req, res) => {
   res.status(404).json({ message: 'Not found' });

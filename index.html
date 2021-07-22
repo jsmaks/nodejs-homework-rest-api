@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="get-profile">Get profile</button>
+    <button id="logout">Logout</button>
+    <script>
+        const data = {
+                email: "maks12@mail.com",
+                password: "1qazXSW@"
+            };
+        fetch("http://localhost:3000/api/auth/users/login", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(response => {
+            if(!response.ok){
+                throw new Error("Error")
+            }
+            return response.json()
+        }).then(({data}) => {
+            const {result: token} = data;
+            localStorage.setItem("token", token);
+        });
+
+        const buttonGetProfile = document.getElementById("get-profile");
+        buttonGetProfile.addEventListener("click", (e)=>{
+            e.preventDefault();
+            const token = localStorage.getItem("token");
+            fetch("http://localhost:3000/api/users/current", {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }).then(response => {
+                if(!response.ok){
+                    throw new Error("Error")
+                }
+                return response.json()
+            }).then(({data}) => {
+                console.log(data.result)
+            })
+        })
+        
+        const buttonLogout = document.getElementById("logout");
+        buttonLogout.addEventListener("click", (e)=>{
+            e.preventDefault();
+            localStorage.removeItem("token");
+        })
+    </script>
+</body>
+</html>
