@@ -13,13 +13,14 @@ const register = async (req, res, next) => {
             })
             return;
         }
+        console.log(req.file)
         const newUser = await service.add({email, password});
         console.log(newUser.email)
 
         res.status(201).json({
             status: "Created",
             code: 201,
-            message: `${newUser.email}`
+            message: `${newUser.email, newUser.avatarURL }`
         })
     } catch (error) {
         next(error)

@@ -1,5 +1,6 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcryptjs');
+const gravatar = require('gravatar');
 const userSchema = new Schema(
   {
     password: {
@@ -20,10 +21,16 @@ const userSchema = new Schema(
       type: String,
       default: null,
     },
-    // owner: {
-    //   type: SchemaTypes.ObjectId,
-    //   ref: 'user',
-    // },
+    avatarURL: {
+      type: String,
+      default: function () {
+        return gravatar.url(this.email, {
+          protocol: 'https',
+          size: '250',
+          default: 'retro',
+        });
+      },
+    },
   },
 
   { versionKey: false, timestamps: true },
