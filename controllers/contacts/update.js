@@ -1,5 +1,5 @@
 const { Contact } = require('../../models');
-const { contactsSchema } = require('../../utils/validate/contacts');
+const { contactsSchema } = require('../../middlewares/contactValidate');
 
 const update = async (req, res, next) => {
   const { error } = contactsSchema.validate(req.body);

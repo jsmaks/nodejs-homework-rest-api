@@ -1,34 +1,26 @@
 const express = require('express');
 const logger = require('morgan');
 const cors = require('cors');
-const api = require("./api")
+const api = require('./api');
+require('./configs/passport-config');
 const app = express();
-
-
-
-//------------------------------------------------------
-//------------------------------------------------------
-require("./configs/passport-config")
-
-const contactsRouter = require('./routes/api/contacts');
-// const { required } = require('joi');
-app.use('/api/contacts', contactsRouter);
 
 const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';
 
-app.use(express.static('public'))
+app.use(express.static('public'));
 app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
 
-app.use("/auth", api.auth)
-app.use("/users", api.users)
+app.use('/contacts', api.contacts);
+app.use('/auth', api.auth);
+app.use('/users', api.users);
 
-app.use((req, res) => {
+app.use((_req, res) => {
   res.status(404).json({ message: 'Not found' });
 });
 
-app.use((err, req, res, next) => {
+app.use((err, _req, res, _next) => {
   res.status(500).json({ message: err.message });
 });
 

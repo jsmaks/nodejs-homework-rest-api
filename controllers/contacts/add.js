@@ -1,11 +1,11 @@
-/* eslint-disable no-unused-vars */
-// const { v4: id } = require('uuid')
+
 const { Contact } = require('../../models');
 
 const add = async (req, res, next) => {
+  const {_id} = req.user;
   const { body } = req;
   try {
-    const result = await Contact.create(body);
+    const result = await Contact.create({owner: _id, ...body});
     res.status(201).json({
       status: 'success',
       code: 201,

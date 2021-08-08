@@ -9,6 +9,7 @@ const dataBase = mongoose
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
+  useCreateIndex: true,
 })
 .then(async () => console.log('Database connect'))
 .catch(error => console.log(error));
