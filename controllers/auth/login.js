@@ -20,6 +20,13 @@ const login = async (req, res, next) => {
       return;
     }
 
+    if (!user.verify) {
+      return res.status(409).json({
+        status: 'Conflict',
+        code: 409,
+        message: 'user is not verified',
+      });
+    }
     
 
     const payload = {

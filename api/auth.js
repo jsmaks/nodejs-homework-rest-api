@@ -5,9 +5,14 @@ const {auth: ctrl} = require("../controllers")
 
 const router = express.Router();
 
+router.get("/users/verify/:verifyToken", ctrl.verifyToken);
+router.post('users/verify', express.json(), useAuth, ctrl.verify)
+
 router.post("/users/signup", express.json(), registerUser, ctrl.register);
 router.post("/users/login", express.json(), registerUser, ctrl.login);
 router.post("/users/logout", useAuth,  ctrl.logout);
+
+
 
 
 module.exports = router;

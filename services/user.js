@@ -5,8 +5,10 @@ const getOne = filter => {
   return User.findOne(filter);
 };
 const getById = (id)=> User.findById(id);
-const add = ({email, password})=>{
-    const newUser = new User({email});
+const add = ({email,password, verifyToken })=>{ //other = { email, verifyCode}
+     
+    const newUser = new User({email, verifyToken});
+    console.log(newUser);
     newUser.setPassword(password);
     return newUser.save();
 

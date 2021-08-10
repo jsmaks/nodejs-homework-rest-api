@@ -4,6 +4,16 @@ const cors = require('cors');
 const api = require('./api');
 require('./configs/passport-config');
 const app = express();
+//---------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------
+
+
+
+
+
+
+//---------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------
 
 const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';
 
@@ -23,5 +33,15 @@ app.use((_req, res) => {
 app.use((err, _req, res, _next) => {
   res.status(500).json({ message: err.message });
 });
+
+
+
+
+
+
+
+
+
+
 
 module.exports = app;
